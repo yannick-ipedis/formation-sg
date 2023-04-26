@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Learning Accessibility for web</title>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
+    <style>
+        .card-deck{
+          margin: 15px;
+        }
+
+        *:focus{
+          outline:2px solid black !important;
+          box-shadow:none !important;
+        }
+
+        .btn-primary{
+          background-color: #E9041E;
+          border:none;
+        }
+
+        .full-link{
+          color:black;
+          display: block;
+        }
+
+        .full-link:hover{
+          color:#0062cc;
+          text-decoration: none;
+        }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      <div class="card-deck" lang="en">
+        <div class="card">
+          <img class="card-img-top" src="https://www.societegenerale.com/sites/default/files/styles/push_blocs_mobile/public/image/2022-07/20220706_Revolution-bancaire-changement-climatique_692x411.jpg" alt="">
+          <div class="card-body">
+            <h5 class="card-title">A banking revolution</h5>
+            <p class="card-text">Banking in the 80’s was a somewhat simpler business and climate change a topic for the future. </p>
+            <a href="#" class="btn btn-primary">Read more</a>
+          </div>
+        </div>
+      
+        <div class="card">
+          <a href="#">
+            <img class="card-img-top" src="https://www.societegenerale.com/sites/default/files/styles/push_blocs_mobile/public/image/2022-02/20220224_IFR_Award_692x411.jpg" alt="Bank of the Year for Sustainability">
+          </a>
+          <div class="card-body">
+            <a href="#" class="full-link">
+              <h5 class="card-title">Bank of the Year for Sustainability</h5>
+              <p class="card-text">Societe Generale named “Bank of the Year for Sustainability” by the International Financing Review (IFR) adding a first-ever series of recognition of the Bank’s extra-financial achievements.</p>
+            </a>
+            <a href="#" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
+      
+        <div class="card">
+          <img class="card-img-top" src="https://www.societegenerale.com/sites/default/files/styles/push_blocs_mobile/public/image/2022-04/gettyimages-ALD.jpg" alt="">
+          <div class="card-body">
+            <h5 class="card-title">Cookies</h5>
+            <p class="card-text">We use cookies for a number of reasons, such as keeping our site reliable and secure, personalising content and ads, providing social media features and to analyse how our Sites are used.</p>
+            <div class="btn-group">
+              <a class="btn btn-primary">Accept & Continue</a>
+              <a class="btn btn-secondary" tabindex="0" role="button">Manage cookies</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

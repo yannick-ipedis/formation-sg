@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Learning Accessibility for web</title>
+	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	<main role="main" class="wrapper">
+    <nav aria-label="Main navigation" id="mega-menu">
+      <ul>
+          <li><a href="javascript:void(0);" class="active">Societe Generale group</a></li>
+          <li><a href="javascript:void(0);">Responsibility</a></li>
+          <li class="has-submenu">
+                  <a href="javascript:void(0);" aria-haspopup="true">
+                    News
+                  </a>
+                  <button class="chevron-menu"></button>
+                  <ul>
+                      <li><a href="javascript:void(0);">All news</a></li>
+                      <li><a href="javascript:void(0);">Press releases</a></li>
+                  </ul>
+          </li>
+          <li><a href="javascript:void(0);">Patronage & sponsoring</a></li>
+          <li><a href="javascript:void(0);">Publications & documents</a></li>
+      </ul>
+    </nav>
+	</main>
+  <script>
+    var menuItems1 = document.querySelectorAll('#mega-menu li.has-submenu');
+    var timer1, timer2;
+
+    var parseHTML = function(str) {
+      var tmp = document.implementation.createHTMLDocument();
+      tmp.body.innerHTML = str;
+      return tmp.body.children;
+    };
+
+    Array.prototype.forEach.call(menuItems1, function(el, i){
+        var activatingA = el.querySelector('a');
+        el.addEventListener("mouseover", function(event){
+            this.className = "has-submenu open";
+            clearTimeout(timer1);
+        });
+        el.addEventListener("mouseout", function(event){
+            timer1 = setTimeout(function(event){
+                document.querySelector("#mega-menu .has-submenu.open").className = "has-submenu";
+            }, 1000);
+        });
+        el.querySelector('button').addEventListener("click",  function(event){
+          if (this.parentNode.className == "has-submenu") {
+            this.parentNode.className = "has-submenu open";
+          } else {
+            this.parentNode.className = "has-submenu";
+          }
+          event.preventDefault();
+        });
+        var links = el.querySelectorAll('a');
+        Array.prototype.forEach.call(links, function(el, i){
+          el.addEventListener("focus", function() {
+            if (timer2) {
+              clearTimeout(timer2);
+              timer2 = null;
+            }
+          });
+          el.addEventListener("blur", function(event) {
+            timer2 = setTimeout(function () {
+              var opennav = document.querySelector("#mega-menu .has-submenu.open")
+              if (opennav) {
+                opennav.className = "has-submenu";
+              }
+            }, 10);
+          });
+        });
+    });
+  </script>
+  </body>
+</html>

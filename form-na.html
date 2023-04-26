@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Learning Accessibility for web</title>
+	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	<div class="wrapper">
+    <form class="signup-form" action="#" id="signup-form" method="get">
+
+      <div class="signup-form_header">    
+        <h1>Accessible Form</h1>
+        <p>* Mandatory fields</p>
+      </div>
+
+      <div class="form-item signup-form_two-items" >
+        <div>
+          <label for="fname">Firstname: <span aria-hidden="true">*</span></label>
+          <input class="required-field" type="text" id="fname" name="fname">
+          <div class="error-message" id="error-required-name">Firstname is mandatory</div>
+        </div>
+
+        <div class="form-item ">
+          <label for="lname">Lastname: <span aria-hidden="true">*</span></label>
+          <input class="required-field" type="text" id="lname" name="lname">
+          <div class="error-message" id="error-required-lname">Lastname is mandatory</div>
+        </div>
+      </div>
+
+      <div class="form-item signup-form_address">
+        <div>
+          <label for="addr1">Address : </label>
+          <input id="addr1" name="addr1">
+        </div>
+      </div>
+
+      <div class="form-item signup-form_code_postal ">
+        <label for="code_postal">Postcode : <span aria-hidden="true">*</span></label>
+        <input class="numeric" type="tel" id="code_postal" name="code_postal" maxlength="5">
+        <div class="error-message error-required-num" id="error-required-p_cp">Enter 5 digits for postcode</div>
+      </div>
+        
+      <div class="form-item signup-form_country">
+        <label for="country">Country : <span aria-hidden="true">*</span></label>
+        <select id="country" name="country">
+          <option value="france">France</option>
+          <option value="Canada">Canada</option>
+          <option value="USA">USA</option>
+          <option value="Italia">Italia</option>
+          <option value="Germany">Germany</option>
+        </select>
+      </div>
+      
+      <div class="form-item signup-form_newsletter">
+        <h3>Do you want to receive our monthly newsletter</h3   >
+        <input type="radio" id="yy" name="newsletter" value="yes" checked>
+        <label for="yes">Yes</label>
+        <input type="radio" id="nn" name="newsletter" value="no">
+        <label for="no">No</label>
+      </div>
+
+      <div class="form-item signup-form_remember dn">		
+        <input type="checkbox" id="remember" name="remember" class="checkbox">
+        <label for="remember">Privacy policy</label>
+        <div class="error-message" id="error-required-privacy">Privacy policy is mandatory</div>
+      </div>
+    
+      <div class="signup-form_footer">
+        <button type="submit">
+          Submit
+          <i class="gg-chevron-double-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </form>
+	</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+      $(document).ready(function() {
+        //----Validate Form on submit---------------------------------------------------------------------------------------------------------
+        $("#signup-form").on("submit", function() {
+          var validate = 0;
+          $(".numeric").each(function() {
+            validateNumber("#" + $(this).attr("id"));
+          });
+
+          // Validate all required fields
+          $(".required-field").each(function() {
+            var fieldValue = $(this).val();
+            if (fieldValue == "") {
+              validate++;
+              //Error handling for screen readers
+              $(this).parent().find(".error-message").show(); //Show error message
+              addAria($(this));
+            } else {
+              $(this).parent().find(".error-message").hide(); //Hide error mesage
+              removeAria($(this));
+            }
+          });
+
+          //----Validate Phone Number and Postal Code-----------------------------------------------------------------------------------------------------
+          function validateNumber(element) {
+            let value = $(element).val();
+            var limit = element == "#p_num" ? 8 : 5; // Assign correct limit of length depending on field
+            var reg = /^\d+$/; //Number regex
+            if (!reg.test(value)) { // Check if value of field contains only numbers
+              $(element).parent().find(".error-message").show(); //display error message
+              addAria(element);
+              validate++;
+            } else if (value.length < limit) {
+              $(element).parent().find(".error-message").show(); //display error message
+              addAria(element);
+              validate++;
+            } else {
+              $(element).parent().find(".error-message").hide(); //hide error message
+              removeAria(element)
+            }
+          }
+
+          // Validate all required fields
+          $(".checkbox").each(function() {
+            if (!$(this).is(":checked")) {
+              validate++;
+              //Error handling for screen readers
+              $(this).parent().find(".error-message").show(); //Show error message
+              addAria($(this));
+            } else {
+              $(this).parent().find(".error-message").hide(); //Hide error mesage
+              removeAria($(this));
+            }
+          });
+
+          if (validate != 0) {
+            return false;
+          }
+          return false;
+        });
+
+        // Adding Accessibility attributes if field is invalid
+        function addAria(element) {
+
+        }
+
+        // Removing Accessibility Attributes if field is valid
+        function removeAria(element) {
+
+        }
+
+        });
+    </script>
+  </body>
+</html>
